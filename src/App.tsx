@@ -20,7 +20,7 @@ function AppContent() {
   const { data, themeMode, setThemeMode, toggleTheme } = useCMS();
 
   const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'approach' | 'focus' | 'services'>('home');
-  const [currentSlideId, setCurrentSlideId] = useState<number>(1);
+  const [currentSlideId, setCurrentSlideId] = useState<number>(data.slides?.[0]?.id ?? 1);
   const [autoplayInterval] = useState<number>(3000);
 
   // Executive Modals & Theme State
@@ -53,6 +53,20 @@ function AppContent() {
 
   const [targetSection, setTargetSection] = useState<string | undefined>(undefined);
 
+  /**
+   * Every visit — including a reload or a back-navigation — opens on the header
+   * slider. Browsers restore the previous scroll offset by default, which would
+   * drop a returning visitor midway down the page.
+   */
+  React.useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    setCurrentSlideId(data.slides?.[0]?.id ?? 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSelectSlide = (id: number) => {
     setCurrentSlideId(id);
   };
@@ -60,6 +74,18 @@ function AppContent() {
   const handleNavigate = (page: 'home' | 'about' | 'approach' | 'focus' | 'services', sectionId?: string) => {
     setCurrentPage(page);
     setTargetSection(sectionId);
+
+    // Landing on home with no section requested means the header slider.
+    if (page === 'home' && (!sectionId || sectionId === '#hero')) {
+      setCurrentSlideId(data.slides?.[0]?.id ?? 1);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+
+    if (!sectionId) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
     if (sectionId) {
       setTimeout(() => {
         const target = document.querySelector(sectionId);
