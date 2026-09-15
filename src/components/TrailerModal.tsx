@@ -46,14 +46,9 @@ export const TrailerModal: React.FC<TrailerModalProps> = ({ title, youtubeId, is
               allowFullScreen
             />
           ) : (
-            <video
-              controls
-              autoPlay
-              className="w-full h-full object-cover"
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
-            >
-              Your browser does not support the video tag.
-            </video>
+            <p className="text-xs font-mono uppercase tracking-wider text-slate-500">
+              No trailer has been added yet.
+            </p>
           )}
         </div>
 

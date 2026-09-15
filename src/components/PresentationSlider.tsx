@@ -129,14 +129,18 @@ export const PresentationSlider: React.FC<PresentationSliderProps> = ({
   return (
     <div className="relative w-full h-full min-h-screen bg-[#050a12] overflow-hidden select-none font-sans text-slate-100">
       
-      {/* Background Image with Smooth Transition */}
-      <div
-        key={currentSlide.id}
-        className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out transform ${
-          isAnimating ? 'scale-105 opacity-90' : 'scale-100 opacity-100'
-        }`}
-        style={{ backgroundImage: `url(${currentSlide.bgImage})` }}
-      />
+      {/* Background image — rendered only when the slide actually has one.
+          No stock default and no placeholder: an unset slide is simply the
+          section's own background colour. */}
+      {currentSlide.bgImage ? (
+        <div
+          key={currentSlide.id}
+          className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out transform ${
+            isAnimating ? 'scale-105 opacity-90' : 'scale-100 opacity-100'
+          }`}
+          style={{ backgroundImage: `url(${currentSlide.bgImage})` }}
+        />
+      ) : null}
 
       {/* Main Hero Content Area */}
       <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-start">

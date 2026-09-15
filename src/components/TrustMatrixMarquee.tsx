@@ -52,9 +52,7 @@ export const TrustMatrixMarquee: React.FC<TrustMatrixMarqueeProps> = ({ embedded
                 alt={brand.name} 
                 referrerPolicy="no-referrer"
                 onError={(e) => {
-                  if (brand.fallbackUrl) {
-                    (e.currentTarget as HTMLImageElement).src = brand.fallbackUrl;
-                  }
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
                 }}
                 className="h-[44px] w-auto max-w-[170px] object-contain transition-all duration-300 group-hover:scale-105"
               />
@@ -79,9 +77,7 @@ export const TrustMatrixMarquee: React.FC<TrustMatrixMarqueeProps> = ({ embedded
                 alt={brand.name} 
                 referrerPolicy="no-referrer"
                 onError={(e) => {
-                  if (brand.fallbackUrl) {
-                    (e.currentTarget as HTMLImageElement).src = brand.fallbackUrl;
-                  }
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
                 }}
                 className="h-[44px] w-auto max-w-[170px] object-contain transition-all duration-300 group-hover:scale-105"
               />

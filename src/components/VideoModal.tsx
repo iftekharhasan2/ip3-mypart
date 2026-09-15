@@ -35,17 +35,23 @@ export const VideoModal: React.FC<VideoModalProps> = ({ slide, isOpen, onClose }
           </button>
         </div>
 
-        {/* Video Player */}
+        {/* Video Player — no sample clip stands in for an unset video. */}
         <div className="relative aspect-video bg-black flex items-center justify-center">
-          <video
-            controls
-            autoPlay
-            className="w-full h-full object-cover"
-            src={slide.videoUrl || "https://www.w3schools.com/html/mov_bbb.mp4"}
-            poster={slide.bgImage}
-          >
-            Your browser does not support the video tag.
-          </video>
+          {slide.videoUrl ? (
+            <video
+              controls
+              autoPlay
+              className="w-full h-full object-cover"
+              src={slide.videoUrl}
+              {...(slide.bgImage ? { poster: slide.bgImage } : {})}
+            >
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">
+              No video has been added to this slide.
+            </p>
+          )}
         </div>
 
         {/* Modal Footer */}
